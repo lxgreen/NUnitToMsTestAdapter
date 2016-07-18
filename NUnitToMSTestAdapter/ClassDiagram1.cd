@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="NUnitToMSTestAdapter.CollectionAssert" Collapsed="true">
+    <Position X="3" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CollectionAssert.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NUnitToMSTestAdapter.SuccessException" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SuccessException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NUnitToMSTestAdapter.AssertionException" Collapsed="true">
+    <Position X="1.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AssertionException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NUnitToMSTestAdapter.IgnoreException" Collapsed="true">
+    <Position X="4.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IgnoreException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NUnitToMSTestAdapter.InconclusiveException" Collapsed="true">
+    <Position X="1.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InconclusiveException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
