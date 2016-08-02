@@ -35,5 +35,26 @@
       <FileName>InconclusiveException.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="NUnitToMSTestAdapter.TestFixtureAttribute">
+    <Position X="4.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TestFixtureAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NUnitToMSTestAdapter.TestCaseAttribute">
+    <Position X="2" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TestCaseAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NUnitToMSTestAdapter.TestAttribute">
+    <Position X="4.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TestAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

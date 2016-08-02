@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
+using MsTestAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using MsTestCollectionAssert = Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert;
 
 namespace NUnitToMSTestAdapter
 {
@@ -116,6 +120,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Arguments to be used in formatting the message</param>
         public static void Inconclusive(string message, params object[] args)
         {
+            throw new InconclusiveException(message, args);
         }
 
         /// <summary>
@@ -125,6 +130,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to initialize the <see cref="T:NUnit.Framework.InconclusiveException" /> with.</param>
         public static void Inconclusive(string message)
         {
+            throw new InconclusiveException(message);
         }
 
         /// <summary>
@@ -133,384 +139,385 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         public static void Inconclusive()
         {
+            throw new InconclusiveException();
         }
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint to be applied</param>
-        public static void That(object actual, IResolveConstraint expression)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint to be applied</param>
+        //public static void That(object actual, IResolveConstraint expression)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static void That(object actual, IResolveConstraint expression, string message)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint to be applied</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static void That(object actual, IResolveConstraint expression, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint expression to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static void That(object actual, IResolveConstraint expression, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint expression to be applied</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static void That(object actual, IResolveConstraint expression, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Asserts that a condition is true. If the condition is false the method throws
-        /// an <see cref="T:NUnit.Framework.AssertionException" />.
-        /// </summary>
-        /// <param name="condition">The evaluated condition</param>
-        /// <param name="message">The message to display if the condition is false</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static void That(bool condition, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Asserts that a condition is true. If the condition is false the method throws
+        ///// an <see cref="T:NUnit.Framework.AssertionException" />.
+        ///// </summary>
+        ///// <param name="condition">The evaluated condition</param>
+        ///// <param name="message">The message to display if the condition is false</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static void That(bool condition, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Asserts that a condition is true. If the condition is false the method throws
-        /// an <see cref="T:NUnit.Framework.AssertionException" />.
-        /// </summary>
-        /// <param name="condition">The evaluated condition</param>
-        /// <param name="message">The message to display if the condition is false</param>
-        public static void That(bool condition, string message)
-        {
-        }
+        ///// <summary>
+        ///// Asserts that a condition is true. If the condition is false the method throws
+        ///// an <see cref="T:NUnit.Framework.AssertionException" />.
+        ///// </summary>
+        ///// <param name="condition">The evaluated condition</param>
+        ///// <param name="message">The message to display if the condition is false</param>
+        //public static void That(bool condition, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Asserts that a condition is true. If the condition is false the method throws
-        /// an <see cref="T:NUnit.Framework.AssertionException" />.
-        /// </summary>
-        /// <param name="condition">The evaluated condition</param>
-        public static void That(bool condition)
-        {
-        }
+        ///// <summary>
+        ///// Asserts that a condition is true. If the condition is false the method throws
+        ///// an <see cref="T:NUnit.Framework.AssertionException" />.
+        ///// </summary>
+        ///// <param name="condition">The evaluated condition</param>
+        //public static void That(bool condition)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-        /// <param name="expr">A Constraint expression to be applied</param>
-        public static void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        ///// <param name="expr">A Constraint expression to be applied</param>
+        //public static void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-        /// <param name="expr">A Constraint expression to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        ///// <param name="expr">A Constraint expression to be applied</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-        /// <param name="expr">A Constraint expression to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        ///// <param name="expr">A Constraint expression to be applied</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to a referenced value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint to be applied</param>
-        public static void That<T>(ref T actual, IResolveConstraint expression)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to a referenced value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint to be applied</param>
+        //public static void That<T>(ref T actual, IResolveConstraint expression)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to a referenced value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static void That<T>(ref T actual, IResolveConstraint expression, string message)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to a referenced value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint to be applied</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static void That<T>(ref T actual, IResolveConstraint expression, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to a referenced value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static void That<T>(ref T actual, IResolveConstraint expression, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to a referenced value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// </summary>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint to be applied</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static void That<T>(ref T actual, IResolveConstraint expression, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Asserts that the code represented by a delegate throws an exception
-        /// that satisfies the constraint provided.
-        /// </summary>
-        /// <param name="code">A TestDelegate to be executed</param>
-        /// <param name="constraint">A ThrowsConstraint used in the test</param>
-        public static void That(TestDelegate code, IResolveConstraint constraint)
-        {
-        }
+        ///// <summary>
+        ///// Asserts that the code represented by a delegate throws an exception
+        ///// that satisfies the constraint provided.
+        ///// </summary>
+        ///// <param name="code">A TestDelegate to be executed</param>
+        ///// <param name="constraint">A ThrowsConstraint used in the test</param>
+        //public static void That(TestDelegate code, IResolveConstraint constraint)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// Used as a synonym for That in rare cases where a private setter
-        /// causes a Visual Basic compilation error.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint to be applied</param>
-        public static void ByVal(object actual, IResolveConstraint expression)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// Used as a synonym for That in rare cases where a private setter
+        ///// causes a Visual Basic compilation error.
+        ///// </summary>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint to be applied</param>
+        //public static void ByVal(object actual, IResolveConstraint expression)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// Used as a synonym for That in rare cases where a private setter
-        /// causes a Visual Basic compilation error.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static void ByVal(object actual, IResolveConstraint expression, string message)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// Used as a synonym for That in rare cases where a private setter
+        ///// causes a Visual Basic compilation error.
+        ///// </summary>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint to be applied</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static void ByVal(object actual, IResolveConstraint expression, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// Used as a synonym for That in rare cases where a private setter
-        /// causes a Visual Basic compilation error.
-        /// </summary>
-        /// <remarks>
-        /// This method is provided for use by VB developers needing to test
-        /// the value of properties with private setters.
-        /// </remarks>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint expression to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static void ByVal(object actual, IResolveConstraint expression, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Apply a constraint to an actual value, succeeding if the constraint
+        ///// is satisfied and throwing an assertion exception on failure.
+        ///// Used as a synonym for That in rare cases where a private setter
+        ///// causes a Visual Basic compilation error.
+        ///// </summary>
+        ///// <remarks>
+        ///// This method is provided for use by VB developers needing to test
+        ///// the value of properties with private setters.
+        ///// </remarks>
+        ///// <param name="actual">The actual value to test</param>
+        ///// <param name="expression">A Constraint expression to be applied</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static void ByVal(object actual, IResolveConstraint expression, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <param name="expression">A constraint to be satisfied by the exception</param>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static Exception Throws(IResolveConstraint expression, TestDelegate code, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <param name="expression">A constraint to be satisfied by the exception</param>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static Exception Throws(IResolveConstraint expression, TestDelegate code, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <param name="expression">A constraint to be satisfied by the exception</param>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static Exception Throws(IResolveConstraint expression, TestDelegate code, string message)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <param name="expression">A constraint to be satisfied by the exception</param>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static Exception Throws(IResolveConstraint expression, TestDelegate code, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <param name="expression">A constraint to be satisfied by the exception</param>
-        /// <param name="code">A TestDelegate</param>
-        public static Exception Throws(IResolveConstraint expression, TestDelegate code)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <param name="expression">A constraint to be satisfied by the exception</param>
+        ///// <param name="code">A TestDelegate</param>
+        //public static Exception Throws(IResolveConstraint expression, TestDelegate code)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <param name="expectedExceptionType">The exception Type expected</param>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static Exception Throws(Type expectedExceptionType, TestDelegate code, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <param name="expectedExceptionType">The exception Type expected</param>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static Exception Throws(Type expectedExceptionType, TestDelegate code, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <param name="expectedExceptionType">The exception Type expected</param>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static Exception Throws(Type expectedExceptionType, TestDelegate code, string message)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <param name="expectedExceptionType">The exception Type expected</param>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static Exception Throws(Type expectedExceptionType, TestDelegate code, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <param name="expectedExceptionType">The exception Type expected</param>
-        /// <param name="code">A TestDelegate</param>
-        public static Exception Throws(Type expectedExceptionType, TestDelegate code)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <param name="expectedExceptionType">The exception Type expected</param>
+        ///// <param name="code">A TestDelegate</param>
+        //public static Exception Throws(Type expectedExceptionType, TestDelegate code)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <typeparam name="T">Type of the expected exception</typeparam>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static T Throws<T>(TestDelegate code, string message, params object[] args) where T : Exception;
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <typeparam name="T">Type of the expected exception</typeparam>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static T Throws<T>(TestDelegate code, string message, params object[] args) where T : Exception;
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <typeparam name="T">Type of the expected exception</typeparam>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static T Throws<T>(TestDelegate code, string message) where T : Exception;
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <typeparam name="T">Type of the expected exception</typeparam>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static T Throws<T>(TestDelegate code, string message) where T : Exception;
 
-        /// <summary>
-        /// Verifies that a delegate throws a particular exception when called.
-        /// </summary>
-        /// <typeparam name="T">Type of the expected exception</typeparam>
-        /// <param name="code">A TestDelegate</param>
-        public static T Throws<T>(TestDelegate code) where T : Exception;
+        ///// <summary>
+        ///// Verifies that a delegate throws a particular exception when called.
+        ///// </summary>
+        ///// <typeparam name="T">Type of the expected exception</typeparam>
+        ///// <param name="code">A TestDelegate</param>
+        //public static T Throws<T>(TestDelegate code) where T : Exception;
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception when called
-        /// and returns it.
-        /// </summary>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static Exception Catch(TestDelegate code, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception when called
+        ///// and returns it.
+        ///// </summary>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static Exception Catch(TestDelegate code, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception when called
-        /// and returns it.
-        /// </summary>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static Exception Catch(TestDelegate code, string message)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception when called
+        ///// and returns it.
+        ///// </summary>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static Exception Catch(TestDelegate code, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception when called
-        /// and returns it.
-        /// </summary>
-        /// <param name="code">A TestDelegate</param>
-        public static Exception Catch(TestDelegate code)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception when called
+        ///// and returns it.
+        ///// </summary>
+        ///// <param name="code">A TestDelegate</param>
+        //public static Exception Catch(TestDelegate code)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception of a certain Type
-        /// or one derived from it when called and returns it.
-        /// </summary>
-        /// <param name="expectedExceptionType">The expected Exception Type</param>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static Exception Catch(Type expectedExceptionType, TestDelegate code, string message, params object[] args)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception of a certain Type
+        ///// or one derived from it when called and returns it.
+        ///// </summary>
+        ///// <param name="expectedExceptionType">The expected Exception Type</param>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static Exception Catch(Type expectedExceptionType, TestDelegate code, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception of a certain Type
-        /// or one derived from it when called and returns it.
-        /// </summary>
-        /// <param name="expectedExceptionType">The expected Exception Type</param>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static Exception Catch(Type expectedExceptionType, TestDelegate code, string message)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception of a certain Type
+        ///// or one derived from it when called and returns it.
+        ///// </summary>
+        ///// <param name="expectedExceptionType">The expected Exception Type</param>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static Exception Catch(Type expectedExceptionType, TestDelegate code, string message)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception of a certain Type
-        /// or one derived from it when called and returns it.
-        /// </summary>
-        /// <param name="expectedExceptionType">The expected Exception Type</param>
-        /// <param name="code">A TestDelegate</param>
-        public static Exception Catch(Type expectedExceptionType, TestDelegate code)
-        {
-        }
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception of a certain Type
+        ///// or one derived from it when called and returns it.
+        ///// </summary>
+        ///// <param name="expectedExceptionType">The expected Exception Type</param>
+        ///// <param name="code">A TestDelegate</param>
+        //public static Exception Catch(Type expectedExceptionType, TestDelegate code)
+        //{
+        //}
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception of a certain Type
-        /// or one derived from it when called and returns it.
-        /// </summary>
-        /// <typeparam name="T">The expected Exception Type</typeparam>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static T Catch<T>(TestDelegate code, string message, params object[] args) where T : Exception;
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception of a certain Type
+        ///// or one derived from it when called and returns it.
+        ///// </summary>
+        ///// <typeparam name="T">The expected Exception Type</typeparam>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static T Catch<T>(TestDelegate code, string message, params object[] args) where T : Exception;
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception of a certain Type
-        /// or one derived from it when called and returns it.
-        /// </summary>
-        /// <typeparam name="T">The expected Exception Type</typeparam>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static T Catch<T>(TestDelegate code, string message) where T : Exception;
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception of a certain Type
+        ///// or one derived from it when called and returns it.
+        ///// </summary>
+        ///// <typeparam name="T">The expected Exception Type</typeparam>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static T Catch<T>(TestDelegate code, string message) where T : Exception;
 
-        /// <summary>
-        /// Verifies that a delegate throws an exception of a certain Type
-        /// or one derived from it when called and returns it.
-        /// </summary>
-        /// <typeparam name="T">The expected Exception Type</typeparam>
-        /// <param name="code">A TestDelegate</param>
-        public static T Catch<T>(TestDelegate code) where T : Exception;
+        ///// <summary>
+        ///// Verifies that a delegate throws an exception of a certain Type
+        ///// or one derived from it when called and returns it.
+        ///// </summary>
+        ///// <typeparam name="T">The expected Exception Type</typeparam>
+        ///// <param name="code">A TestDelegate</param>
+        //public static T Catch<T>(TestDelegate code) where T : Exception;
 
-        /// <summary>Verifies that a delegate does not throw an exception</summary>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        public static void DoesNotThrow(TestDelegate code, string message, params object[] args)
-        {
-        }
+        ///// <summary>Verifies that a delegate does not throw an exception</summary>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        ///// <param name="args">Arguments to be used in formatting the message</param>
+        //public static void DoesNotThrow(TestDelegate code, string message, params object[] args)
+        //{
+        //}
 
-        /// <summary>Verifies that a delegate does not throw an exception.</summary>
-        /// <param name="code">A TestDelegate</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        public static void DoesNotThrow(TestDelegate code, string message)
-        {
-        }
+        ///// <summary>Verifies that a delegate does not throw an exception.</summary>
+        ///// <param name="code">A TestDelegate</param>
+        ///// <param name="message">The message that will be displayed on failure</param>
+        //public static void DoesNotThrow(TestDelegate code, string message)
+        //{
+        //}
 
-        /// <summary>Verifies that a delegate does not throw an exception.</summary>
-        /// <param name="code">A TestDelegate</param>
-        public static void DoesNotThrow(TestDelegate code)
-        {
-        }
+        ///// <summary>Verifies that a delegate does not throw an exception.</summary>
+        ///// <param name="code">A TestDelegate</param>
+        //public static void DoesNotThrow(TestDelegate code)
+        //{
+        //}
 
         /// <summary>
         /// Asserts that a condition is true. If the condition is false the method throws
@@ -521,6 +528,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void True(bool condition, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(condition);
         }
 
         /// <summary>
@@ -531,6 +539,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void True(bool condition, string message)
         {
+            MsTestAssert.IsTrue(condition);
         }
 
         /// <summary>
@@ -540,6 +549,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="condition">The evaluated condition</param>
         public static void True(bool condition)
         {
+            MsTestAssert.IsTrue(condition);
         }
 
         /// <summary>
@@ -551,6 +561,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsTrue(bool condition, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(condition);
         }
 
         /// <summary>
@@ -561,6 +572,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsTrue(bool condition, string message)
         {
+            MsTestAssert.IsTrue(condition);
         }
 
         /// <summary>
@@ -570,6 +582,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="condition">The evaluated condition</param>
         public static void IsTrue(bool condition)
         {
+            MsTestAssert.IsTrue(condition);
         }
 
         /// <summary>
@@ -581,6 +594,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void False(bool condition, string message, params object[] args)
         {
+            MsTestAssert.IsFalse(condition);
         }
 
         /// <summary>
@@ -591,6 +605,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void False(bool condition, string message)
         {
+            MsTestAssert.IsFalse(condition);
         }
 
         /// <summary>
@@ -600,6 +615,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="condition">The evaluated condition</param>
         public static void False(bool condition)
         {
+            MsTestAssert.IsFalse(condition);
         }
 
         /// <summary>
@@ -611,6 +627,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsFalse(bool condition, string message, params object[] args)
         {
+            MsTestAssert.IsFalse(condition);
         }
 
         /// <summary>
@@ -621,6 +638,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsFalse(bool condition, string message)
         {
+            MsTestAssert.IsFalse(condition);
         }
 
         /// <summary>
@@ -630,6 +648,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="condition">The evaluated condition</param>
         public static void IsFalse(bool condition)
         {
+            MsTestAssert.IsFalse(condition);
         }
 
         /// <summary>
@@ -642,6 +661,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void NotNull(object anObject, string message, params object[] args)
         {
+            MsTestAssert.IsNotNull(anObject);
         }
 
         /// <summary>
@@ -653,6 +673,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void NotNull(object anObject, string message)
         {
+            MsTestAssert.IsNotNull(anObject);
         }
 
         /// <summary>
@@ -663,6 +684,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="anObject">The object that is to be tested</param>
         public static void NotNull(object anObject)
         {
+            MsTestAssert.IsNotNull(anObject);
         }
 
         /// <summary>
@@ -675,6 +697,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotNull(object anObject, string message, params object[] args)
         {
+            MsTestAssert.IsNotNull(anObject);
         }
 
         /// <summary>
@@ -686,6 +709,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNotNull(object anObject, string message)
         {
+            MsTestAssert.IsNotNull(anObject);
         }
 
         /// <summary>
@@ -696,6 +720,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="anObject">The object that is to be tested</param>
         public static void IsNotNull(object anObject)
         {
+            MsTestAssert.IsNotNull(anObject);
         }
 
         /// <summary>
@@ -708,6 +733,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Null(object anObject, string message, params object[] args)
         {
+            MsTestAssert.IsNull(anObject);
         }
 
         /// <summary>
@@ -719,6 +745,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Null(object anObject, string message)
         {
+            MsTestAssert.IsNull(anObject);
         }
 
         /// <summary>
@@ -729,6 +756,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="anObject">The object that is to be tested</param>
         public static void Null(object anObject)
         {
+            MsTestAssert.IsNull(anObject);
         }
 
         /// <summary>
@@ -741,6 +769,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNull(object anObject, string message, params object[] args)
         {
+            MsTestAssert.IsNull(anObject);
         }
 
         /// <summary>
@@ -752,6 +781,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNull(object anObject, string message)
         {
+            MsTestAssert.IsNull(anObject);
         }
 
         /// <summary>
@@ -762,6 +792,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="anObject">The object that is to be tested</param>
         public static void IsNull(object anObject)
         {
+            MsTestAssert.IsNull(anObject);
         }
 
         /// <summary>
@@ -774,6 +805,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreEqual(int expected, int actual, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -795,6 +827,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreEqual(int expected, int actual)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -807,6 +840,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreEqual(long expected, long actual, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -818,6 +852,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreEqual(long expected, long actual, string message)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -828,6 +863,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreEqual(long expected, long actual)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -838,9 +874,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void AreEqual(uint expected, uint actual, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -850,9 +887,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void AreEqual(uint expected, uint actual, string message)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -861,9 +899,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
-        [CLSCompliant(false)]
+
         public static void AreEqual(uint expected, uint actual)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -874,9 +913,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void AreEqual(ulong expected, ulong actual, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -886,9 +926,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void AreEqual(ulong expected, ulong actual, string message)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -897,9 +938,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
-        [CLSCompliant(false)]
+
         public static void AreEqual(ulong expected, ulong actual)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -912,6 +954,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreEqual(decimal expected, decimal actual, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -923,6 +966,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreEqual(decimal expected, decimal actual, string message)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -933,6 +977,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreEqual(decimal expected, decimal actual)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -949,6 +994,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreEqual(double expected, double actual, double delta, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -964,6 +1010,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreEqual(double expected, double actual, double delta, string message)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -978,6 +1025,7 @@ namespace NUnitToMSTestAdapter
         /// the expected and the actual</param>
         public static void AreEqual(double expected, double actual, double delta)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -994,6 +1042,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreEqual(double expected, double? actual, double delta, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(expected, (double)actual, delta, message, args);
         }
 
         /// <summary>
@@ -1009,6 +1058,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreEqual(double expected, double? actual, double delta, string message)
         {
+            MsTestAssert.AreEqual(expected, (double)actual, delta, message);
         }
 
         /// <summary>
@@ -1023,6 +1073,7 @@ namespace NUnitToMSTestAdapter
         /// the expected and the actual</param>
         public static void AreEqual(double expected, double? actual, double delta)
         {
+            MsTestAssert.AreEqual(expected, (double)actual, delta);
         }
 
         /// <summary>
@@ -1037,6 +1088,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreEqual(object expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1050,6 +1102,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreEqual(object expected, object actual, string message)
         {
+            MsTestAssert.AreEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1062,6 +1115,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreEqual(object expected, object actual)
         {
+            MsTestAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -1074,6 +1128,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreNotEqual(int expected, int actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1085,6 +1140,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreNotEqual(int expected, int actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1095,6 +1151,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreNotEqual(int expected, int actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1107,6 +1164,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreNotEqual(long expected, long actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1118,6 +1176,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreNotEqual(long expected, long actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1128,6 +1187,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreNotEqual(long expected, long actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1138,9 +1198,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void AreNotEqual(uint expected, uint actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1150,9 +1211,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void AreNotEqual(uint expected, uint actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1161,9 +1223,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
-        [CLSCompliant(false)]
+
         public static void AreNotEqual(uint expected, uint actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1174,9 +1237,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void AreNotEqual(ulong expected, ulong actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1186,9 +1250,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void AreNotEqual(ulong expected, ulong actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1197,9 +1262,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
-        [CLSCompliant(false)]
+
         public static void AreNotEqual(ulong expected, ulong actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1212,6 +1278,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreNotEqual(decimal expected, decimal actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1223,6 +1290,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreNotEqual(decimal expected, decimal actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1233,6 +1301,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreNotEqual(decimal expected, decimal actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1245,6 +1314,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreNotEqual(float expected, float actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1256,6 +1326,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreNotEqual(float expected, float actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1266,6 +1337,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreNotEqual(float expected, float actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1278,6 +1350,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreNotEqual(double expected, double actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1289,6 +1362,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreNotEqual(double expected, double actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1299,6 +1373,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreNotEqual(double expected, double actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1313,6 +1388,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreNotEqual(object expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1326,6 +1402,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreNotEqual(object expected, object actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1338,6 +1415,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual value</param>
         public static void AreNotEqual(object expected, object actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1350,6 +1428,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreSame(object expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1361,6 +1440,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreSame(object expected, object actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1371,6 +1451,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual object</param>
         public static void AreSame(object expected, object actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1383,6 +1464,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreNotSame(object expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message, args);
         }
 
         /// <summary>
@@ -1394,6 +1476,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void AreNotSame(object expected, object actual, string message)
         {
+            MsTestAssert.AreNotEqual(expected, actual, message);
         }
 
         /// <summary>
@@ -1404,6 +1487,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The actual object</param>
         public static void AreNotSame(object expected, object actual)
         {
+            MsTestAssert.AreNotEqual(expected, actual);
         }
 
         /// <summary>
@@ -1416,6 +1500,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNaN(double aDouble, string message, params object[] args)
         {
+            MsTestAssert.IsNotInstanceOfType(aDouble, typeof(double), message, args);
         }
 
         /// <summary>
@@ -1427,6 +1512,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNaN(double aDouble, string message)
         {
+            MsTestAssert.IsNotInstanceOfType(aDouble, typeof(double), message);
         }
 
         /// <summary>
@@ -1437,6 +1523,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="aDouble">The value that is to be tested</param>
         public static void IsNaN(double aDouble)
         {
+            MsTestAssert.IsNotInstanceOfType(aDouble, typeof(double));
         }
 
         /// <summary>
@@ -1449,6 +1536,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNaN(double? aDouble, string message, params object[] args)
         {
+            MsTestAssert.IsNotInstanceOfType(aDouble, typeof(double), message, args);
         }
 
         /// <summary>
@@ -1460,6 +1548,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNaN(double? aDouble, string message)
         {
+            MsTestAssert.IsNotInstanceOfType(aDouble, typeof(double), message);
         }
 
         /// <summary>
@@ -1470,6 +1559,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="aDouble">The value that is to be tested</param>
         public static void IsNaN(double? aDouble)
         {
+            MsTestAssert.IsNotInstanceOfType(aDouble, typeof(double));
         }
 
         /// <summary>
@@ -1480,6 +1570,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsEmpty(string aString, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(aString.Equals(string.Empty), message, args);
         }
 
         /// <summary>
@@ -1489,6 +1580,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsEmpty(string aString, string message)
         {
+            MsTestAssert.IsTrue(aString.Equals(string.Empty), message);
         }
 
         /// <summary>
@@ -1497,6 +1589,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="aString">The string to be tested</param>
         public static void IsEmpty(string aString)
         {
+            MsTestAssert.IsTrue(aString.Equals(string.Empty));
         }
 
         /// <summary>
@@ -1507,6 +1600,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsEmpty(IEnumerable collection, string message, params object[] args)
         {
+            MsTestAssert.AreEqual(0, collection.Cast<object>().Count(), message, args);
         }
 
         /// <summary>
@@ -1516,6 +1610,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsEmpty(IEnumerable collection, string message)
         {
+            MsTestAssert.AreEqual(0, collection.Cast<object>().Count(), message);
         }
 
         /// <summary>
@@ -1524,6 +1619,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="collection">An array, list or other collection implementing ICollection</param>
         public static void IsEmpty(IEnumerable collection)
         {
+            MsTestAssert.AreEqual(0, collection.Cast<object>().Count());
         }
 
         /// <summary>
@@ -1534,6 +1630,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotEmpty(string aString, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(!string.IsNullOrEmpty(aString), message, args);
         }
 
         /// <summary>
@@ -1543,6 +1640,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNotEmpty(string aString, string message)
         {
+            MsTestAssert.IsTrue(!string.IsNullOrEmpty(aString), message);
         }
 
         /// <summary>
@@ -1551,6 +1649,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="aString">The string to be tested</param>
         public static void IsNotEmpty(string aString)
         {
+            MsTestAssert.IsTrue(!string.IsNullOrEmpty(aString));
         }
 
         /// <summary>
@@ -1561,6 +1660,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotEmpty(IEnumerable collection, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(collection.Cast<object>().Count() > 0, message, args);
         }
 
         /// <summary>
@@ -1570,6 +1670,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNotEmpty(IEnumerable collection, string message)
         {
+            MsTestAssert.IsTrue(collection.Cast<object>().Count() > 0, message);
         }
 
         /// <summary>
@@ -1578,6 +1679,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="collection">An array, list or other collection implementing ICollection</param>
         public static void IsNotEmpty(IEnumerable collection)
         {
+            MsTestAssert.IsTrue(collection.Cast<object>().Count() > 0);
         }
 
         /// <summary>
@@ -1588,6 +1690,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNullOrEmpty(string aString, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(string.IsNullOrEmpty(aString), message, args);
         }
 
         /// <summary>
@@ -1597,6 +1700,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNullOrEmpty(string aString, string message)
         {
+            MsTestAssert.IsTrue(string.IsNullOrEmpty(aString), message);
         }
 
         /// <summary>
@@ -1605,6 +1709,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="aString">The string to be tested</param>
         public static void IsNullOrEmpty(string aString)
         {
+            MsTestAssert.IsTrue(string.IsNullOrEmpty(aString));
         }
 
         /// <summary>Assert that a string is not null or empty</summary>
@@ -1613,6 +1718,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotNullOrEmpty(string aString, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(!string.IsNullOrEmpty(aString), message, args);
         }
 
         /// <summary>Assert that a string is not null or empty</summary>
@@ -1620,12 +1726,14 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNotNullOrEmpty(string aString, string message)
         {
+            MsTestAssert.IsTrue(!string.IsNullOrEmpty(aString), message);
         }
 
         /// <summary>Assert that a string is not null or empty</summary>
         /// <param name="aString">The string to be tested</param>
         public static void IsNotNullOrEmpty(string aString)
         {
+            MsTestAssert.IsTrue(!string.IsNullOrEmpty(aString));
         }
 
         /// <summary>
@@ -1637,6 +1745,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsAssignableFrom(Type expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected, message, args);
         }
 
         /// <summary>
@@ -1647,6 +1756,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsAssignableFrom(Type expected, object actual, string message)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected, message);
         }
 
         /// <summary>
@@ -1656,6 +1766,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The object under examination</param>
         public static void IsAssignableFrom(Type expected, object actual)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected);
         }
 
         /// <summary>
@@ -1667,6 +1778,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsAssignableFrom<T>(object actual, string message, params object[] args)
         {
+            MsTestAssert.IsInstanceOfType(actual, typeof(T), message, args);
         }
 
         /// <summary>
@@ -1677,6 +1789,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsAssignableFrom<T>(object actual, string message)
         {
+            MsTestAssert.IsInstanceOfType(actual, typeof(T), message);
         }
 
         /// <summary>
@@ -1686,6 +1799,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The object under examination</param>
         public static void IsAssignableFrom<T>(object actual)
         {
+            MsTestAssert.IsInstanceOfType(actual, typeof(T));
         }
 
         /// <summary>
@@ -1697,6 +1811,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotAssignableFrom(Type expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected, message, args);
         }
 
         /// <summary>
@@ -1707,6 +1822,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNotAssignableFrom(Type expected, object actual, string message)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected, message);
         }
 
         /// <summary>
@@ -1716,6 +1832,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The object under examination</param>
         public static void IsNotAssignableFrom(Type expected, object actual)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected);
         }
 
         /// <summary>
@@ -1727,6 +1844,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotAssignableFrom<T>(object actual, string message, params object[] args)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, typeof(T), message, args);
         }
 
         /// <summary>
@@ -1737,6 +1855,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNotAssignableFrom<T>(object actual, string message)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, typeof(T), message);
         }
 
         /// <summary>
@@ -1746,6 +1865,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The object under examination</param>
         public static void IsNotAssignableFrom<T>(object actual)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, typeof(T));
         }
 
         /// <summary>
@@ -1757,6 +1877,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsInstanceOf(Type expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected, message, args);
         }
 
         /// <summary>
@@ -1767,6 +1888,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsInstanceOf(Type expected, object actual, string message)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected, message);
         }
 
         /// <summary>
@@ -1776,6 +1898,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The object being examined</param>
         public static void IsInstanceOf(Type expected, object actual)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected);
         }
 
         /// <summary>
@@ -1788,6 +1911,7 @@ namespace NUnitToMSTestAdapter
         [Obsolete]
         public static void IsInstanceOfType(Type expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected, message, args);
         }
 
         /// <summary>
@@ -1799,6 +1923,7 @@ namespace NUnitToMSTestAdapter
         [Obsolete]
         public static void IsInstanceOfType(Type expected, object actual, string message)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected, message);
         }
 
         /// <summary>
@@ -1809,6 +1934,7 @@ namespace NUnitToMSTestAdapter
         [Obsolete]
         public static void IsInstanceOfType(Type expected, object actual)
         {
+            MsTestAssert.IsInstanceOfType(actual, expected);
         }
 
         /// <summary>
@@ -1820,6 +1946,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsInstanceOf<T>(object actual, string message, params object[] args)
         {
+            MsTestAssert.IsInstanceOfType(actual, typeof(T), message, args);
         }
 
         /// <summary>
@@ -1830,6 +1957,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsInstanceOf<T>(object actual, string message)
         {
+            MsTestAssert.IsInstanceOfType(actual, typeof(T), message);
         }
 
         /// <summary>
@@ -1839,6 +1967,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The object being examined</param>
         public static void IsInstanceOf<T>(object actual)
         {
+            MsTestAssert.IsInstanceOfType(actual, typeof(T));
         }
 
         /// <summary>
@@ -1850,6 +1979,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotInstanceOf(Type expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected, message, args);
         }
 
         /// <summary>
@@ -1860,6 +1990,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNotInstanceOf(Type expected, object actual, string message)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected, message);
         }
 
         /// <summary>
@@ -1869,6 +2000,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The object being examined</param>
         public static void IsNotInstanceOf(Type expected, object actual)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected);
         }
 
         /// <summary>
@@ -1881,6 +2013,7 @@ namespace NUnitToMSTestAdapter
         [Obsolete]
         public static void IsNotInstanceOfType(Type expected, object actual, string message, params object[] args)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected, message, args);
         }
 
         /// <summary>
@@ -1892,6 +2025,7 @@ namespace NUnitToMSTestAdapter
         [Obsolete]
         public static void IsNotInstanceOfType(Type expected, object actual, string message)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected, message);
         }
 
         /// <summary>
@@ -1902,6 +2036,7 @@ namespace NUnitToMSTestAdapter
         [Obsolete]
         public static void IsNotInstanceOfType(Type expected, object actual)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, expected);
         }
 
         /// <summary>
@@ -1913,6 +2048,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotInstanceOf<T>(object actual, string message, params object[] args)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, typeof(T), message, args);
         }
 
         /// <summary>
@@ -1923,6 +2059,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void IsNotInstanceOf<T>(object actual, string message)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, typeof(T), message);
         }
 
         /// <summary>
@@ -1932,6 +2069,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The object being examined</param>
         public static void IsNotInstanceOf<T>(object actual)
         {
+            MsTestAssert.IsNotInstanceOfType(actual, typeof(T));
         }
 
         /// <summary>
@@ -1945,6 +2083,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Greater(int arg1, int arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message, args);
         }
 
         /// <summary>
@@ -1957,6 +2096,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Greater(int arg1, int arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message);
         }
 
         /// <summary>
@@ -1968,6 +2108,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void Greater(int arg1, int arg2)
         {
+            MsTestAssert.IsTrue(arg1 > arg2);
         }
 
         /// <summary>
@@ -1979,9 +2120,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void Greater(uint arg1, uint arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message, args);
         }
 
         /// <summary>
@@ -1992,9 +2134,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg1">The first value, expected to be greater</param>
         /// <param name="arg2">The second value, expected to be less</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void Greater(uint arg1, uint arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message);
         }
 
         /// <summary>
@@ -2004,9 +2147,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="arg1">The first value, expected to be greater</param>
         /// <param name="arg2">The second value, expected to be less</param>
-        [CLSCompliant(false)]
+
         public static void Greater(uint arg1, uint arg2)
         {
+            MsTestAssert.IsTrue(arg1 > arg2);
         }
 
         /// <summary>
@@ -2020,6 +2164,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Greater(long arg1, long arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message, args);
         }
 
         /// <summary>
@@ -2032,6 +2177,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Greater(long arg1, long arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message);
         }
 
         /// <summary>
@@ -2043,6 +2189,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void Greater(long arg1, long arg2)
         {
+            MsTestAssert.IsTrue(arg1 > arg2);
         }
 
         /// <summary>
@@ -2054,9 +2201,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void Greater(ulong arg1, ulong arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message, args);
         }
 
         /// <summary>
@@ -2067,9 +2215,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg1">The first value, expected to be greater</param>
         /// <param name="arg2">The second value, expected to be less</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void Greater(ulong arg1, ulong arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message);
         }
 
         /// <summary>
@@ -2079,9 +2228,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="arg1">The first value, expected to be greater</param>
         /// <param name="arg2">The second value, expected to be less</param>
-        [CLSCompliant(false)]
+
         public static void Greater(ulong arg1, ulong arg2)
         {
+            MsTestAssert.IsTrue(arg1 > arg2);
         }
 
         /// <summary>
@@ -2095,6 +2245,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Greater(decimal arg1, decimal arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message, args);
         }
 
         /// <summary>
@@ -2107,6 +2258,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Greater(decimal arg1, decimal arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message);
         }
 
         /// <summary>
@@ -2118,6 +2270,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void Greater(decimal arg1, decimal arg2)
         {
+            MsTestAssert.IsTrue(arg1 > arg2);
         }
 
         /// <summary>
@@ -2131,6 +2284,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Greater(double arg1, double arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message, args);
         }
 
         /// <summary>
@@ -2143,6 +2297,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Greater(double arg1, double arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message);
         }
 
         /// <summary>
@@ -2154,6 +2309,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void Greater(double arg1, double arg2)
         {
+            MsTestAssert.IsTrue(arg1 > arg2);
         }
 
         /// <summary>
@@ -2167,6 +2323,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Greater(float arg1, float arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message, args);
         }
 
         /// <summary>
@@ -2179,6 +2336,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Greater(float arg1, float arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 > arg2, message);
         }
 
         /// <summary>
@@ -2190,6 +2348,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void Greater(float arg1, float arg2)
         {
+            MsTestAssert.IsTrue(arg1 > arg2);
         }
 
         /// <summary>
@@ -2203,6 +2362,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Greater(IComparable arg1, IComparable arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) > 0, message, args);
         }
 
         /// <summary>
@@ -2215,6 +2375,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Greater(IComparable arg1, IComparable arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) > 0, message);
         }
 
         /// <summary>
@@ -2226,6 +2387,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void Greater(IComparable arg1, IComparable arg2)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) > 0);
         }
 
         /// <summary>
@@ -2239,6 +2401,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Less(int arg1, int arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message, args);
         }
 
         /// <summary>
@@ -2251,6 +2414,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Less(int arg1, int arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message);
         }
 
         /// <summary>
@@ -2262,6 +2426,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void Less(int arg1, int arg2)
         {
+            MsTestAssert.IsTrue(arg1 < arg2);
         }
 
         /// <summary>
@@ -2273,9 +2438,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void Less(uint arg1, uint arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message, args);
         }
 
         /// <summary>
@@ -2286,9 +2452,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg1">The first value, expected to be less</param>
         /// <param name="arg2">The second value, expected to be greater</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void Less(uint arg1, uint arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message);
         }
 
         /// <summary>
@@ -2298,9 +2465,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="arg1">The first value, expected to be less</param>
         /// <param name="arg2">The second value, expected to be greater</param>
-        [CLSCompliant(false)]
+
         public static void Less(uint arg1, uint arg2)
         {
+            MsTestAssert.IsTrue(arg1 < arg2);
         }
 
         /// <summary>
@@ -2314,6 +2482,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Less(long arg1, long arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message, args);
         }
 
         /// <summary>
@@ -2326,6 +2495,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Less(long arg1, long arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message);
         }
 
         /// <summary>
@@ -2337,6 +2507,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void Less(long arg1, long arg2)
         {
+            MsTestAssert.IsTrue(arg1 < arg2);
         }
 
         /// <summary>
@@ -2348,9 +2519,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void Less(ulong arg1, ulong arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message, args);
         }
 
         /// <summary>
@@ -2361,9 +2533,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg1">The first value, expected to be less</param>
         /// <param name="arg2">The second value, expected to be greater</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void Less(ulong arg1, ulong arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message);
         }
 
         /// <summary>
@@ -2373,9 +2546,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="arg1">The first value, expected to be less</param>
         /// <param name="arg2">The second value, expected to be greater</param>
-        [CLSCompliant(false)]
+
         public static void Less(ulong arg1, ulong arg2)
         {
+            MsTestAssert.IsTrue(arg1 < arg2);
         }
 
         /// <summary>
@@ -2389,6 +2563,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Less(decimal arg1, decimal arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message, args);
         }
 
         /// <summary>
@@ -2401,6 +2576,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Less(decimal arg1, decimal arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message);
         }
 
         /// <summary>
@@ -2412,6 +2588,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void Less(decimal arg1, decimal arg2)
         {
+            MsTestAssert.IsTrue(arg1 < arg2);
         }
 
         /// <summary>
@@ -2425,6 +2602,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Less(double arg1, double arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message, args);
         }
 
         /// <summary>
@@ -2437,6 +2615,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Less(double arg1, double arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message);
         }
 
         /// <summary>
@@ -2448,6 +2627,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void Less(double arg1, double arg2)
         {
+            MsTestAssert.IsTrue(arg1 < arg2);
         }
 
         /// <summary>
@@ -2461,6 +2641,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Less(float arg1, float arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message, args);
         }
 
         /// <summary>
@@ -2473,6 +2654,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Less(float arg1, float arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 < arg2, message);
         }
 
         /// <summary>
@@ -2484,6 +2666,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void Less(float arg1, float arg2)
         {
+            MsTestAssert.IsTrue(arg1 < arg2);
         }
 
         /// <summary>
@@ -2497,6 +2680,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Less(IComparable arg1, IComparable arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) < 0, message, args);
         }
 
         /// <summary>
@@ -2509,6 +2693,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Less(IComparable arg1, IComparable arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) < 0, message);
         }
 
         /// <summary>
@@ -2520,6 +2705,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void Less(IComparable arg1, IComparable arg2)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) < 0);
         }
 
         /// <summary>
@@ -2533,6 +2719,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void GreaterOrEqual(int arg1, int arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message, args);
         }
 
         /// <summary>
@@ -2545,6 +2732,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void GreaterOrEqual(int arg1, int arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message);
         }
 
         /// <summary>
@@ -2556,6 +2744,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void GreaterOrEqual(int arg1, int arg2)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2);
         }
 
         /// <summary>
@@ -2567,9 +2756,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void GreaterOrEqual(uint arg1, uint arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message, args);
         }
 
         /// <summary>
@@ -2580,9 +2770,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg1">The first value, expected to be greater</param>
         /// <param name="arg2">The second value, expected to be less</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void GreaterOrEqual(uint arg1, uint arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message);
         }
 
         /// <summary>
@@ -2592,9 +2783,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="arg1">The first value, expected to be greater</param>
         /// <param name="arg2">The second value, expected to be less</param>
-        [CLSCompliant(false)]
+
         public static void GreaterOrEqual(uint arg1, uint arg2)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2);
         }
 
         /// <summary>
@@ -2608,6 +2800,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void GreaterOrEqual(long arg1, long arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message, args);
         }
 
         /// <summary>
@@ -2620,6 +2813,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void GreaterOrEqual(long arg1, long arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message);
         }
 
         /// <summary>
@@ -2631,6 +2825,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void GreaterOrEqual(long arg1, long arg2)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2);
         }
 
         /// <summary>
@@ -2642,9 +2837,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void GreaterOrEqual(ulong arg1, ulong arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message, args);
         }
 
         /// <summary>
@@ -2655,9 +2851,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg1">The first value, expected to be greater</param>
         /// <param name="arg2">The second value, expected to be less</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void GreaterOrEqual(ulong arg1, ulong arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message);
         }
 
         /// <summary>
@@ -2667,9 +2864,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="arg1">The first value, expected to be greater</param>
         /// <param name="arg2">The second value, expected to be less</param>
-        [CLSCompliant(false)]
+
         public static void GreaterOrEqual(ulong arg1, ulong arg2)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2);
         }
 
         /// <summary>
@@ -2683,6 +2881,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void GreaterOrEqual(decimal arg1, decimal arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message, args);
         }
 
         /// <summary>
@@ -2695,6 +2894,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void GreaterOrEqual(decimal arg1, decimal arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message);
         }
 
         /// <summary>
@@ -2706,6 +2906,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void GreaterOrEqual(decimal arg1, decimal arg2)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2);
         }
 
         /// <summary>
@@ -2719,6 +2920,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void GreaterOrEqual(double arg1, double arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message, args);
         }
 
         /// <summary>
@@ -2731,6 +2933,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void GreaterOrEqual(double arg1, double arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message);
         }
 
         /// <summary>
@@ -2742,6 +2945,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void GreaterOrEqual(double arg1, double arg2)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2);
         }
 
         /// <summary>
@@ -2755,6 +2959,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void GreaterOrEqual(float arg1, float arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message, args);
         }
 
         /// <summary>
@@ -2767,6 +2972,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void GreaterOrEqual(float arg1, float arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2, message);
         }
 
         /// <summary>
@@ -2778,6 +2984,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void GreaterOrEqual(float arg1, float arg2)
         {
+            MsTestAssert.IsTrue(arg1 >= arg2);
         }
 
         /// <summary>
@@ -2791,6 +2998,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void GreaterOrEqual(IComparable arg1, IComparable arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) >= 0, message, args);
         }
 
         /// <summary>
@@ -2803,6 +3011,8 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void GreaterOrEqual(IComparable arg1, IComparable arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) >= 0, message);
+
         }
 
         /// <summary>
@@ -2814,6 +3024,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be less</param>
         public static void GreaterOrEqual(IComparable arg1, IComparable arg2)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) >= 0);
         }
 
         /// <summary>
@@ -2827,6 +3038,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void LessOrEqual(int arg1, int arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message, args);
         }
 
         /// <summary>
@@ -2839,6 +3051,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void LessOrEqual(int arg1, int arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message);
         }
 
         /// <summary>
@@ -2850,6 +3063,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void LessOrEqual(int arg1, int arg2)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2);
         }
 
         /// <summary>
@@ -2861,9 +3075,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void LessOrEqual(uint arg1, uint arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message, args);
         }
 
         /// <summary>
@@ -2874,9 +3089,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg1">The first value, expected to be less</param>
         /// <param name="arg2">The second value, expected to be greater</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void LessOrEqual(uint arg1, uint arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message);
         }
 
         /// <summary>
@@ -2886,9 +3102,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="arg1">The first value, expected to be less</param>
         /// <param name="arg2">The second value, expected to be greater</param>
-        [CLSCompliant(false)]
+
         public static void LessOrEqual(uint arg1, uint arg2)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2);
         }
 
         /// <summary>
@@ -2902,6 +3119,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void LessOrEqual(long arg1, long arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message, args);
         }
 
         /// <summary>
@@ -2914,6 +3132,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void LessOrEqual(long arg1, long arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message);
         }
 
         /// <summary>
@@ -2925,6 +3144,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void LessOrEqual(long arg1, long arg2)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2);
         }
 
         /// <summary>
@@ -2936,9 +3156,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        [CLSCompliant(false)]
+
         public static void LessOrEqual(ulong arg1, ulong arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message, args);
         }
 
         /// <summary>
@@ -2949,9 +3170,10 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg1">The first value, expected to be less</param>
         /// <param name="arg2">The second value, expected to be greater</param>
         /// <param name="message">The message to display in case of failure</param>
-        [CLSCompliant(false)]
+
         public static void LessOrEqual(ulong arg1, ulong arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message);
         }
 
         /// <summary>
@@ -2961,9 +3183,10 @@ namespace NUnitToMSTestAdapter
         /// </summary>
         /// <param name="arg1">The first value, expected to be less</param>
         /// <param name="arg2">The second value, expected to be greater</param>
-        [CLSCompliant(false)]
+
         public static void LessOrEqual(ulong arg1, ulong arg2)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2);
         }
 
         /// <summary>
@@ -2977,6 +3200,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void LessOrEqual(decimal arg1, decimal arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message, args);
         }
 
         /// <summary>
@@ -2989,6 +3213,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void LessOrEqual(decimal arg1, decimal arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message);
         }
 
         /// <summary>
@@ -3000,6 +3225,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void LessOrEqual(decimal arg1, decimal arg2)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2);
         }
 
         /// <summary>
@@ -3013,6 +3239,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void LessOrEqual(double arg1, double arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message, args);
         }
 
         /// <summary>
@@ -3025,6 +3252,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void LessOrEqual(double arg1, double arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message);
         }
 
         /// <summary>
@@ -3036,6 +3264,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void LessOrEqual(double arg1, double arg2)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2);
         }
 
         /// <summary>
@@ -3049,6 +3278,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void LessOrEqual(float arg1, float arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message, args);
         }
 
         /// <summary>
@@ -3061,6 +3291,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void LessOrEqual(float arg1, float arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2, message);
         }
 
         /// <summary>
@@ -3072,6 +3303,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void LessOrEqual(float arg1, float arg2)
         {
+            MsTestAssert.IsTrue(arg1 <= arg2);
         }
 
         /// <summary>
@@ -3085,6 +3317,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void LessOrEqual(IComparable arg1, IComparable arg2, string message, params object[] args)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) <= 0, message, args);
         }
 
         /// <summary>
@@ -3097,6 +3330,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void LessOrEqual(IComparable arg1, IComparable arg2, string message)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) <= 0, message);
         }
 
         /// <summary>
@@ -3108,6 +3342,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="arg2">The second value, expected to be greater</param>
         public static void LessOrEqual(IComparable arg1, IComparable arg2)
         {
+            MsTestAssert.IsTrue(arg1.CompareTo(arg2) <= 0);
         }
 
         /// <summary>Asserts that an object is contained in a list.</summary>
@@ -3117,6 +3352,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void Contains(object expected, ICollection actual, string message, params object[] args)
         {
+            MsTestCollectionAssert.Contains(actual, expected, message, args);
         }
 
         /// <summary>Asserts that an object is contained in a list.</summary>
@@ -3125,6 +3361,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="message">The message to display in case of failure</param>
         public static void Contains(object expected, ICollection actual, string message)
         {
+            MsTestCollectionAssert.Contains(actual, expected, message);
         }
 
         /// <summary>Asserts that an object is contained in a list.</summary>
@@ -3132,6 +3369,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="actual">The list to be examined</param>
         public static void Contains(object expected, ICollection actual)
         {
+            MsTestCollectionAssert.Contains(actual, expected);
         }
 
         /// <summary>
@@ -3146,7 +3384,7 @@ namespace NUnitToMSTestAdapter
         /// <param name="args">Array of objects to be used in formatting the message</param>
         protected static void AssertDoublesAreEqual(double expected, double actual, double delta, string message, object[] args)
         {
+            Assert.AreEqual(expected, actual, delta, message, args);
         }
     }
-}
 }
